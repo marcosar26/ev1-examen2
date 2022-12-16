@@ -88,7 +88,7 @@ public class FilmDAO implements IFilmDAO {
                     Film film = new Film(id, title, description, releaseYear, languageId, originalLanguageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, lastUpdate);
                     Actor actor = new Actor(actor_id, first_name, last_name, last_update);
 
-                    Set<Film> films = map.getOrDefault(actor, new HashSet<>());
+                    Set<Film> films = map.getOrDefault(actor, new TreeSet<>(Comparator.comparing(Film::getId)));
                     films.add(film);
                     map.put(actor, films);
                 }
