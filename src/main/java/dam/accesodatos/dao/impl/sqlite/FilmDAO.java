@@ -1,7 +1,7 @@
 package dam.accesodatos.dao.impl.sqlite;
 
 import dam.accesodatos.bd.DatabaseManager;
-import dam.accesodatos.dao.impl.sqlite.interfaces.IFilmDAO;
+import dam.accesodatos.dao.interfaces.IFilmDAO;
 import dam.accesodatos.model.Actor;
 import dam.accesodatos.model.Film;
 

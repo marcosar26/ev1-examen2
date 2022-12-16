@@ -1,7 +1,7 @@
 package dam.accesodatos.dao.impl.sqlite;
 
 import dam.accesodatos.bd.DatabaseManager;
-import dam.accesodatos.dao.impl.sqlite.interfaces.IActorDAO;
+import dam.accesodatos.dao.interfaces.IActorDAO;
 import dam.accesodatos.model.Actor;
 
 import java.sql.PreparedStatement;

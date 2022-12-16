@@ -2,8 +2,8 @@ package dam.accesodatos;
 
 import dam.accesodatos.dao.impl.sqlite.ActorDAO;
 import dam.accesodatos.dao.impl.sqlite.FilmDAO;
-import dam.accesodatos.dao.impl.sqlite.interfaces.IActorDAO;
-import dam.accesodatos.dao.impl.sqlite.interfaces.IFilmDAO;
+import dam.accesodatos.dao.interfaces.IActorDAO;
+import dam.accesodatos.dao.interfaces.IFilmDAO;
 
 import java.util.Collection;
 

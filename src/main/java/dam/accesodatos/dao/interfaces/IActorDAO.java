@@ -1,4 +1,4 @@
-package dam.accesodatos.dao.impl.sqlite.interfaces;
+package dam.accesodatos.dao.interfaces;
 
 import dam.accesodatos.model.Actor;
 
