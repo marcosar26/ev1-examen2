@@ -3,9 +3,9 @@ package dam.accesodatos.dao.impl.sqlite.interfaces;
 import java.util.Collection;
 
 public interface IFilmDAO {
-    public double getRentalDurationAvg();
+    double getRentalDurationAvg();
 
-    public Collection<?> getDistinctSpecialFeatures();
+    Collection<?> getDistinctSpecialFeatures();
 
-    public void exportFilmsForActorsWithLastname(String lastname);
+    void exportFilmsForActorsWithLastname(String lastname);
 }

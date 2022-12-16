@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="ad_ev1_examen2" uuid="0c44ae40-34e9-4b2d-8e67-a4db032877ab">
+    <data-source source="LOCAL" name="ad_ev1_examen2" uuid="84033ba4-a9a1-4b76-95f5-24283a77b522">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\DAMA\OneDrive - Consejería de Educación\ev1-examen2\src\main\resources\ad_ev1_examen2.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\DAMA\IdeaProjects\ev1-examen2\src\main\resources\ad_ev1_examen2.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

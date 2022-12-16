@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-public class FilmDAO extends AbstractDAO implements IFilmDAO {
+public class FilmDAO implements IFilmDAO {
 
     @Override
     public double getRentalDurationAvg() {
@@ -31,7 +31,7 @@ public class FilmDAO extends AbstractDAO implements IFilmDAO {
     @Override
     public Collection<String> getDistinctSpecialFeatures() {
         String sql = "SELECT DISTINCT special_features FROM film";
-        List<String> featuresList = new ArrayList<>();
+        Set<String> featuresSet = new TreeSet<>();
 
         try (Statement statement = DatabaseManager.getInstance().getCon().createStatement()) {
 
@@ -41,10 +41,10 @@ public class FilmDAO extends AbstractDAO implements IFilmDAO {
                     if (feature.contains(",")) {
                         String[] features = feature.split(",");
                         for (String f : features) {
-                            featuresList.add(f.trim());
+                            featuresSet.add(f.trim());
                         }
                     } else {
-                        featuresList.add(feature);
+                        featuresSet.add(feature);
                     }
                 }
             }
@@ -52,22 +52,14 @@ public class FilmDAO extends AbstractDAO implements IFilmDAO {
             throw new RuntimeException(e);
         }
 
-        Set<String> temp = Set.copyOf(featuresList);
-
-        featuresList = new ArrayList<>(temp);
-
-        Collections.sort(featuresList);
-
-        return featuresList;
+        return featuresSet;
     }
 
     @Override
     public void exportFilmsForActorsWithLastname(String lastname) {
         String sql = "SELECT * FROM film INNER JOIN film_actor ON film.film_id = film_actor.film_id INNER JOIN actor ON film_actor.actor_id = actor.actor_id WHERE actor.last_name = ?";
 
-        Set<Integer> ids = new HashSet<>();
-
-        Map<Actor, List<Film>> map = new HashMap<>();
+        Map<Actor, Set<Film>> map = new TreeMap<>(Comparator.comparing(Actor::getId));
 
         try (PreparedStatement statement = DatabaseManager.getInstance().getCon().prepareStatement(sql)) {
             statement.setString(1, lastname);
@@ -96,9 +88,7 @@ public class FilmDAO extends AbstractDAO implements IFilmDAO {
                     Film film = new Film(id, title, description, releaseYear, languageId, originalLanguageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, lastUpdate);
                     Actor actor = new Actor(actor_id, first_name, last_name, last_update);
 
-                    ids.add(actor_id);
-
-                    List<Film> films = map.getOrDefault(actor, new ArrayList<>());
+                    Set<Film> films = map.getOrDefault(actor, new HashSet<>());
                     films.add(film);
                     map.put(actor, films);
                 }
@@ -107,17 +97,17 @@ public class FilmDAO extends AbstractDAO implements IFilmDAO {
             throw new RuntimeException(e);
         }
 
-        System.out.println("Se van a exportar " + ids.size() + " archivos");
+        System.out.println("Se van a exportar " + map.size() + " archivos");
 
         File dir = new File("films-csv");
         if (!dir.exists()) dir.mkdir();
 
-        for (Map.Entry<Actor, List<Film>> actorListEntry : map.entrySet()) {
+        for (Map.Entry<Actor, Set<Film>> actorListEntry : map.entrySet()) {
             int id = actorListEntry.getKey().getId();
             String nombre = actorListEntry.getKey().getFirst_name();
             String apellido = actorListEntry.getKey().getLast_name();
 
-            List<Film> pelis = actorListEntry.getValue();
+            Set<Film> pelis = actorListEntry.getValue();
 
             System.out.println("El actor con id " + id + " tiene " + pelis.size() + " películas");
 
@@ -128,9 +118,8 @@ public class FilmDAO extends AbstractDAO implements IFilmDAO {
             try {
                 if (file.exists()) {
                     file.delete();
-                } else {
-                    file.createNewFile();
                 }
+                file.createNewFile();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

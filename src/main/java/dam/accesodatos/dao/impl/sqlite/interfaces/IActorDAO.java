@@ -5,7 +5,7 @@ import dam.accesodatos.model.Actor;
 import java.util.Collection;
 
 public interface IActorDAO {
-    public Collection<Actor> getActorsWithFirstNameStartingWith(String letra);
+    Collection<Actor> getActorsWithFirstNameStartingWith(String letra);
 
-    public Collection<Actor> getActorsWithMostFilms();
+    Collection<Actor> getActorsWithMostFilms();
 }
